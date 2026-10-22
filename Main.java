@@ -1,31 +1,43 @@
+import java.util.ArrayList;
 
-import java.util.Scanner;
+public class StudentManagement {
+    ArrayList<Student> students = new ArrayList<>();
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public void addStudent(Student student) {
+        students.add(student);
+        System.out.println("Student added successfully!");
+    }
 
-        System.out.println("=== Student Management System ===");
-        System.out.print("Enter Student ID: ");
-        int id = sc.nextInt();
-        sc.nextLine();
+    public void viewStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+            return;
+        }
 
-        System.out.print("Enter Student Name: ");
-        String name = sc.nextLine();
+        for (Student student : students) {
+            student.display();
+            System.out.println("----------------");
+        }
+    }
 
-        System.out.print("Enter Student Age: ");
-        int age = sc.nextInt();
-        sc.nextLine();
+    public void searchStudent(int id) {
+        for (Student student : students) {
+            if (student.id == id) {
+                student.display();
+                return;
+            }
+        }
+        System.out.println("Student not found.");
+    }
 
-        System.out.print("Enter Student Course: ");
-        String course = sc.nextLine();
-
-        System.out.println("\n=== Student Details ===");
-        System.out.println("Student ID: " + id);
-        System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.println("Course: " + course);
-
-        sc.close();
+    public void deleteStudent(int id) {
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).id == id) {
+                students.remove(i);
+                System.out.println("Student deleted successfully!");
+                return;
+            }
+        }
+        System.out.println("Student not found.");
     }
 }
