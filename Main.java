@@ -1,43 +1,68 @@
-import java.util.ArrayList;
 
-public class StudentManagement {
-    ArrayList<Student> students = new ArrayList<>();
+import java.util.Scanner;
 
-    public void addStudent(Student student) {
-        students.add(student);
-        System.out.println("Student added successfully!");
-    }
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        StudentManagement sm = new StudentManagement();
 
-    public void viewStudents() {
-        if (students.isEmpty()) {
-            System.out.println("No students found.");
-            return;
-        }
+        while (true) {
+            System.out.println("\n=== Student Management System ===");
+            System.out.println("1. Add Student");
+            System.out.println("2. View Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Delete Student");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
 
-        for (Student student : students) {
-            student.display();
-            System.out.println("----------------");
-        }
-    }
+            int choice = sc.nextInt();
+            sc.nextLine();
 
-    public void searchStudent(int id) {
-        for (Student student : students) {
-            if (student.id == id) {
-                student.display();
-                return;
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Age: ");
+                    int age = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Enter Course: ");
+                    String course = sc.nextLine();
+
+                    Student student =
+                        new Student(id, name, age, course);
+                    sm.addStudent(student);
+                    break;
+
+                case 2:
+                    sm.viewStudents();
+                    break;
+
+                case 3:
+                    System.out.print("Enter ID to search: ");
+                    int searchId = sc.nextInt();
+                    sm.searchStudent(searchId);
+                    break;
+
+                case 4:
+                    System.out.print("Enter ID to delete: ");
+                    int deleteId = sc.nextInt();
+                    sm.deleteStudent(deleteId);
+                    break;
+
+                case 5:
+                    System.out.println("Thank you!");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice!");
             }
         }
-        System.out.println("Student not found.");
-    }
-
-    public void deleteStudent(int id) {
-        for (int i = 0; i < students.size(); i++) {
-            if (students.get(i).id == id) {
-                students.remove(i);
-                System.out.println("Student deleted successfully!");
-                return;
-            }
-        }
-        System.out.println("Student not found.");
     }
 }
